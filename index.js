@@ -14,8 +14,8 @@ const port = process.env.PORT || 5000;
 // middleware 
 app.use(cors());
 app.use(express.json());
-app.use('https://rgf.onrender.com/uploads', express.static('uploads'))
-app.use('https://rgf.onrender.com/modelingImg', express.static('modelingImg'))
+app.use('/uploads', express.static('uploads'))
+app.use('/modelingImg', express.static('modelingImg'))
 
 
 // MongoDb _______________
