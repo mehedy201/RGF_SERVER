@@ -57,7 +57,22 @@ async function run(){
                         <p>Message${req.body.message}</p>`, // html body
               });
         })
-        
+        // Contact form for Single Product page 
+        app.post('/productContactForm', async (req, res) => {
+            const info = await transporter.sendMail({
+                from: req.body.email, // sender address
+                to: process.env.MY_EMAIL, // list of receivers
+                subject: `You Got Message From RGF Product`, // Subject line
+                text: req.body.message, // plain text body
+                html: `<p><b>You Got New Message from ${req.body.yourName}<b/></p>
+                        <h5>Name: ${req.body.yourName}</h5>
+                        <h5>Email: ${req.body.yourEmail}</h5>
+                        <h5>Phone: ${req.body.phone}</h5> 
+                        <h5>Amount Of SQ. FT Needed: ${req.body.amount_of_sq_ft_needed}</h5> 
+                        <h5>Shipping Address: ${req.body.shipping_address}</h5> 
+                        <h5>Product Link: ${req.body.productLink}</h5>`
+              });
+        })
 
         // Contact Us Using NodeMailer End_____________________________________
 
