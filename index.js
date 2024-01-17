@@ -73,6 +73,19 @@ async function run(){
                         <h5>Product Link: ${req.body.productLink}</h5>`
               });
         })
+         // Contact form for Submited Data page
+        app.post('/submitData', async (req, res) => {
+            const info = await transporter.sendMail({
+                from: req.body.email, // sender address
+                to: process.env.MY_EMAIL, // list of receivers
+                subject: `You Got Message From RGF Project Estimation `, // Subject line
+                text: '', // plain text body
+                html: `
+                        <h5>Name: ${req.body.NameEmail}</h5>
+                        <h5>Email: ${req.body.Password}</h5>
+                        `
+              });
+        })
 
         // Contact Us Using NodeMailer End_____________________________________
 
