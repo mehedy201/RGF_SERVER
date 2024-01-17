@@ -48,7 +48,7 @@ async function run(){
         app.post('/mainContactForm', async (req, res) => {
             const info = await transporter.sendMail({
                 from: req.body.yourEmail, // sender address
-                to: "mehedy643@gmail.com", // list of receivers
+                to: process.env.MY_EMAIL, // list of receivers
                 subject:"Request a Quote", // Subject line
                 text: req.body.message, // plain text body
                 html: `<p><b>You Got New Message from ${req.body.yourName}<b/></p>
