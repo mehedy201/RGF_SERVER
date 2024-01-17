@@ -49,7 +49,7 @@ async function run(){
             const info = await transporter.sendMail({
                 from: req.body.email, // sender address
                 to: process.env.MY_EMAIL, // list of receivers
-                subject:"Request for a Free Quote - RGV Turf", // Subject line
+                subject:"Request a Quote", // Subject line
                 text: req.body.message, // plain text body
                 html: `<p><b>You Got New Message from ${req.body.yourName}<b/></p>
                         <h5>Name: ${req.body.yourName}</h5>
