@@ -56,6 +56,7 @@ async function run(){
                         <h5>Email: ${req.body.yourEmail}</h5>
                         <p>Message${req.body.message}</p>`, // html body
               });
+            res.send(info);
         })
         // Contact form for Single Product page 
         app.post('/productContactForm', async (req, res) => {
@@ -72,6 +73,7 @@ async function run(){
                         <h5>Shipping Address: ${req.body.shipping_address}</h5> 
                         <h5>Product Link: ${req.body.productLink}</h5>`
               });
+            res.send(info);
         })
          // Contact form for Submited Data page
         app.post('/submitData', async (req, res) => {
@@ -85,6 +87,7 @@ async function run(){
                         <h5>Email: ${req.body.Password}</h5>
                         `
               });
+            res.send(info);
         })
 
         // Contact Us Using NodeMailer End_____________________________________
