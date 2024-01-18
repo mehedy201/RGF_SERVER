@@ -49,7 +49,7 @@ async function run(){
             const info = await transporter.sendMail({
                 from: req.body.yourEmail, // sender address
                 to: process.env.MY_EMAIL, // list of receivers
-                subject:"Request a Quote", // Subject line
+                subject:`Request a Quote` | ${new Date().toLocaleDateString()} | ${new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}, // Subject line
                 text: req.body.message, // plain text body
                 html: `<p><b>You Got New Message from ${req.body.yourName}<b/></p>
                         <h5>Name: ${req.body.yourName}</h5>
@@ -63,7 +63,7 @@ async function run(){
             const info = await transporter.sendMail({
                 from: req.body.email, // sender address
                 to: process.env.MY_EMAIL, // list of receivers
-                subject: `You Got Message From RGF Product`, // Subject line
+                subject: `You Got Message From RGF Product | ${new Date().toLocaleDateString()} | ${new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}`, // Subject line
                 text: req.body.message, // plain text body
                 html: `<p><b>You Got New Message from ${req.body.yourName}<b/></p>
                         <h5>Name: ${req.body.yourName}</h5>
@@ -80,7 +80,7 @@ async function run(){
             const info = await transporter.sendMail({
                 from: req.body.email, // sender address
                 to: process.env.MY_EMAIL, // list of receivers
-                subject: `You Got Message From RGF Project Estimation `, // Subject line
+                subject: `You Got Message From RGF Project Estimation | ${new Date().toLocaleDateString()} | ${new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}`, // Subject line
                 text: '', // plain text body
                 html: `
                         <h5>Name: ${req.body.NameEmail}</h5>
