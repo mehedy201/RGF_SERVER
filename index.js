@@ -16,6 +16,7 @@ app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static('uploads'))
 app.use('/modelingImg', express.static('modelingImg'));
+app.use('/emailimage', express.static('emailimage'))
 app.use(express.urlencoded({ extended: true }));
 
 
