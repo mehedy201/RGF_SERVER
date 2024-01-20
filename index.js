@@ -34,6 +34,12 @@ const client = new MongoClient(uri, {
 
 async function run(){
     try {
+
+        // Connect the client to the server	(optional starting in v4.7)
+        await client.connect();
+        const productsCatelog = client.db("RGFDatabase").collection("Products");
+        const modelingImages = client.db("RGFDatabase").collection("modelingImages");
+        
         // Contact Us Using NodeMailer Start___________________________________
         const transporter = nodemailer.createTransport({
             host: "smtp.gmail.com",
@@ -79,31 +85,34 @@ async function run(){
         })
          // Contact form for Submited Data page
         app.post('/submitData', async (req, res) => {
+            console.log(req.body)
             const info = await transporter.sendMail({
-                from: req.body.email, // sender address
+                from: req.body.customerEmail, // sender address
                 to: process.env.MY_EMAIL, // list of receivers
-                subject: `You Got Message From RGF Project Estimation | ${date} | ${time}`, // Subject line
+                subject: `Employee Data Portal | ${new Date().toLocaleDateString()} | ${new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}`, // Subject line
                 text: '', // plain text body
                 html: `
-                        <h5>Name: ${req.body.NameEmail}</h5>
-                        <h5>Email: ${req.body.Password}</h5>
-                        `
+                        <h5>Installer Name: ${req.body.installerName}</h5>
+                        <h5>Contact Name (Who installer spoke to?): ${req.body.contactName}</h5>
+                        <h5>Customer Phone: ${req.body.customerPhone}</h5>
+                        <h5>Customer Email: ${req.body.customerEmail}</h5>
+                        <h5>Address: ${req.body.address}</h5>
+                        <h5>Total sq. ft.of tur zones: ${req.body.sqft}</h5>
+                        <h5>Time Estimate was Completed= Date: ${req.body.date} Time: ${req.body.time}</h5>
+                        <h5>Notes: ${req.body.notes}</h5>
+                        `,
+                attachments: [
+                    {
+                        filename: 'image.png',
+                        path: `${req.body.imagePath}`
+                    }
+                ]
+
               });
-            res.send(info);
+              res.send({success: true, info});
         })
 
         // Contact Us Using NodeMailer End_____________________________________
-
-
-
-
-
-        // Connect the client to the server	(optional starting in v4.7)
-        await client.connect();
-        const productsCatelog = client.db("RGFDatabase").collection("Products");
-        const modelingImages = client.db("RGFDatabase").collection("modelingImages");
-
-
 
         // Image Upload Using Multer ________________
         const storage = multer.diskStorage({ 
@@ -146,8 +155,6 @@ async function run(){
             });
         }) 
 
-
-
         // Modeling Image Storage _________________________________________________________
         const storageA = multer.diskStorage({ 
             destination: 'modelingImg/',
@@ -189,6 +196,32 @@ async function run(){
             });
         }) 
 
+        // Email Image Upload ____________________________
+        const storageb = multer.diskStorage({ 
+            destination: 'emailimage/',
+            filename: (req, file, cb) => {
+                const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+               cb(null, uniqueSuffix + '-' + file.originalname)
+            },
+            fileFilter: (req, file, cb) =>{
+                const supportedImage = /png|jpg|jpeg|webp/;
+                const extension = path.extname(file.originalname);
+                if(supportedImage.test(extension)){
+                    cb(null, true)
+                }else{
+                    cb(new Error('Must be a png/jpg image'))
+                }
+             }
+         });
+        
+        const emailImage = multer({storage: storageb})
+        
+        let linkImage;
+        app.post('/emailimage', emailImage.single('image'), (req, res) => {
+            linkImage =req.file
+            console.log(linkImage)
+            res.send({success: true, linkImage});
+          })
 
         // End Multer ______________________________________________________
 
@@ -316,30 +349,11 @@ async function run(){
             const query = {_id: new ObjectId(id) };
             const singleData = await modelingImages.deleteOne(query);
             res.send({success: true});
-        })
-
-
-
-
-
-
-
-
-        
+        })  
     } finally{
-        
     }
 }
-
 run().catch(console.dir)
-
-
-
-
-
-
-
-
 
 
 
@@ -349,5 +363,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log('Backend Console', port , process.env.DB_USER, process.env.DB_PASS)
+    console.log('Backend Console', port)
 })
