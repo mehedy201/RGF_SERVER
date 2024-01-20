@@ -30,6 +30,12 @@ const client = new MongoClient(uri, {
       deprecationErrors: true,
     }
   });
+  const forDate = new Date();
+  const time = new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+  const day = forDate.getDay();
+  const month = forDate.getMonth()+1;
+  const year = forDate.getFullYear();
+  const date = `${month}/${day}/${year}`;
 
 
 async function run(){
@@ -51,8 +57,7 @@ async function run(){
               pass: process.env.MY_EMAIL_PASS,
             },
           });
-        const date = new Date().toLocaleDateString();
-        const time = new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+
         app.post('/mainContactForm', async (req, res) => {
             const info = await transporter.sendMail({
                 from: req.body.yourEmail, // sender address
