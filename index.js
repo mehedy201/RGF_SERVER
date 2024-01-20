@@ -95,7 +95,7 @@ async function run(){
             const info = await transporter.sendMail({
                 from: req.body.customerEmail, // sender address
                 to: process.env.MY_EMAIL, // list of receivers
-                subject: `Employee Data Portal | ${new Date().toLocaleDateString()} | ${new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}`, // Subject line
+                subject: `Employee Data Portal | ${date} | ${time}`, // Subject line
                 text: '', // plain text body
                 html: `
                         <h5>Installer Name: ${req.body.installerName}</h5>
