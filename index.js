@@ -33,7 +33,7 @@ const client = new MongoClient(uri, {
   });
   const forDate = new Date();
   const time = new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
-  const day = forDate.getDay();
+  const day = forDate.getDate();
   const month = forDate.getMonth()+1;
   const year = forDate.getFullYear();
   const date = `${month}/${day}/${year}`;
