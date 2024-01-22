@@ -61,7 +61,7 @@ async function run(){
 
         app.post('/mainContactForm', async (req, res) => {
             const info = await transporter.sendMail({
-                from: process.env.MY_EMAIL, // sender address
+                from: req.body.yourEmail, // sender address
                 to: process.env.MY_EMAIL, // list of receivers
                 subject:`Request a Quote | ${date} | ${time}`, // Subject line
                 text: req.body.message, // plain text body
@@ -75,7 +75,7 @@ async function run(){
         // Contact form for Single Product page 
         app.post('/productContactForm', async (req, res) => {
             const info = await transporter.sendMail({
-                from: process.env.MY_EMAIL, // sender address
+                from: req.body.yourEmail, // sender address
                 to: process.env.MY_EMAIL, // list of receivers
                 subject: `You Got Message From RGF Product | ${date} | ${time}`, // Subject line
                 text: req.body.message, // plain text body
@@ -93,7 +93,7 @@ async function run(){
         app.post('/submitData', async (req, res) => {
             console.log(req.body)
             const info = await transporter.sendMail({
-                from: process.env.MY_EMAIL, // sender address
+                from: req.body.yourEmail, // sender address
                 to: process.env.MY_EMAIL, // list of receivers
                 subject: `Employee Data Portal | ${date} | ${time}`, // Subject line
                 text: '', // plain text body
