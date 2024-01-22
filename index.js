@@ -49,7 +49,7 @@ async function run(){
         
         // Contact Us Using NodeMailer Start___________________________________
         const transporter = nodemailer.createTransport({
-            host: "smtp.gmail.com",
+            host: "mail.rgvturf.com",
             port: 465,
             secure: true,
             auth: {
