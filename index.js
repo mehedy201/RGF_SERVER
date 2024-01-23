@@ -32,10 +32,10 @@ const client = new MongoClient(uri, {
     }
   });
   const forDate = new Date();
-  const time = new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
-  const day = forDate.getDate();
-  const month = forDate.getMonth()+1;
-  const year = forDate.getFullYear();
+  const time = forDate.toLocaleString('en-US', { timeZone: 'America/Chicago', hour12: true });
+  const day = forDate.toLocaleDateString('en-US', { timeZone: 'America/Chicago', day: 'numeric'})
+  const month = forDate.toLocaleDateString('en-US', { timeZone: 'America/Chicago', month: 'numeric'})
+  const year = forDate.toLocaleDateString('en-US', { timeZone: 'America/Chicago', year: 'numeric'})
   const date = `${month}/${day}/${year}`;
 
 
