@@ -315,7 +315,58 @@ async function run(){
             }
           })
 
+ //   Testimonials API Start________________________________________________________
+        app.post('/testimonials', async (req, res) =>{
+            const product = req.body;
+            const result = await testimonials.insertOne(product);
+            res.send({success: true, result});
+        })
+        // Get All Testimonials ____________________________________
+        app.get('/testimonials', async(req, res) => {
+            const query ={};
+            const cursor = testimonials.find(query);
+            const products = await cursor.toArray();
+            res.send(products);
+        });
 
+        //Get single Testimonials  Data from server____________________________________________
+        app.get('/testimonials/:id', async(req, res) =>{
+            const id = req.params.id;
+            const query = {_id: new ObjectId(id) };
+            const singleData = await testimonials.findOne(query);
+            res.send(singleData);
+        })
+
+
+        //Delete single Testimonials  Data from server____________________________________________
+        app.delete('/testimonials/:id', async(req, res) =>{
+            const id = req.params.id;
+            const query = {_id: new ObjectId(id) };
+            const singleData = await testimonials.deleteOne(query);
+            res.send(singleData);
+        })
+
+        // Update Testimonials _______________________________________________________________
+        app.put('/testimonials/:id', async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: new ObjectId(id)};
+            const option = {upsert: true};
+            console.log(req.body)
+                let updateDocument = {
+                    $set: {
+                     title: req.body.title,
+                     text: req.body.text,
+                     name: req.body.name,
+                     address: req.body.address,
+                     fileName: req.body.fileName,
+                     img: req.body.img,
+                    },
+                }
+                const result = await testimonials.updateOne(filter, updateDocument, option);
+                res.send({success: true, result})
+          })
+
+        //   Testimonials API end
 
 
         // Products category Data from Server ______________________________________________
